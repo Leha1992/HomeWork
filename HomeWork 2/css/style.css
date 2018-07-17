@@ -1,0 +1,87 @@
+table {
+    border-collapse: collapse;
+    margin-top: 50px;
+}
+
+table td,
+table th {
+    border: 1px solid #000;
+    padding: 10px;
+    text-align: center;
+}
+
+a {
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    background-color: blue;
+    color: #fff;
+    transition: all .3s;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+a:hover {
+    background-color: lightblue; 
+}
+
+caption {
+    text-align: left;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+form {
+    border: 1px solid #888;
+    border-radius: 5px;
+    margin-top: 20px;
+    width: 350px;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+form div {
+    margin-bottom: 15px;
+    width: 100%;
+    display: flex;
+}
+form div select {
+    margin-left: auto;
+}
+.choose-item {
+    margin-bottom: 20px;
+}
+
+
+.computer-create,
+.ultrabook-create,
+.server-create {
+    display: none;
+}
+
+td {
+    padding: 10px;
+    border: 1px solid #000;
+    border-collapse: collapse;
+}
+
+.btn-delete,
+.btn-edit {
+    cursor: pointer;
+}
+
+.btn-delete {
+    color: red;
+}
+
+.btn-edit {
+    color: blue;
+}
+
+#info-ultrabook,
+#info-computer,
+#info-server {
+    display: none;
+}
