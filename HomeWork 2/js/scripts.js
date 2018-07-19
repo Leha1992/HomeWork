@@ -31,7 +31,7 @@ ComputerServer.prototype.constructor = ComputerServer;
 
 function DBservase (apiUrl) {
    this.apiUrl = apiUrl; 
-}
+};
 
 DBservase.prototype.saveItemInDb = function (item) {
     var xhr = new XMLHttpRequest();
@@ -40,7 +40,7 @@ DBservase.prototype.saveItemInDb = function (item) {
     xhr.send(item);       
 };
 
-DBservase.prototype.getItmesFromDb = function (callback,delteItem,getItem) {
+DBservase.prototype.getItmesFromDb = function (callback,delteItem,getItem,edit) {
     var xhr = new XMLHttpRequest();
     xhr.open('GET', this.apiUrl,true);
     xhr.send('');
@@ -49,21 +49,19 @@ DBservase.prototype.getItmesFromDb = function (callback,delteItem,getItem) {
         callback(JSON.parse(res.currentTarget.responseText));
         delteItem();
         getItem();
-    }
+        edit();
+    };
 };
 
-DBservase.prototype.getItem = function (addInfo) {
+DBservase.prototype.getItem = function (addInfo,editInfo) {
     var xhr = new XMLHttpRequest();
     xhr.open('GET',`${this.apiUrl}/${localStorage.getItem('id')}`,true);
     xhr.send('');
-    console.log(location.href);
 
     xhr.onload = function (res) {
-       addInfo(JSON.parse(res.currentTarget.responseText));
-    }   
-
-    
-}
+        location.href.slice(-9) === "info.html" ? addInfo(JSON.parse(res.currentTarget.responseText)) : editInfo(JSON.parse(res.currentTarget.responseText));
+    };   
+};
 
 DBservase.prototype.deleteItem = function (e) {
     var confirmation = confirm('Вы точно хотитет удалить отбъект?');
@@ -78,6 +76,13 @@ DBservase.prototype.deleteItem = function (e) {
 
     return;
 };
+
+DBservase.prototype.updateItem = function (item) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('PUT',`${this.apiUrl}/${localStorage.getItem('id')}`,true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.send(item);
+}
 
 var dbServase = new DBservase('http://localhost:2403/items');
 
@@ -105,8 +110,52 @@ function renderItems (text) {
 function getId (e) {
     var id = e.target.parentNode.parentNode.id;
     localStorage.setItem("id",id); 
-    location.href = 'info.html';
+    e.target.className === 'btn-info' ? location.href = 'info.html': location.href = 'edit.html';
 }
+
+function editItem (text) {
+     switch (text.typeItem) {
+        case 'computer':
+            document.getElementById('computer-create').style.display = 'block';
+
+            document.getElementById('produser').value = text.provider;
+            document.getElementById('type').value = text.type;
+            document.getElementById('type-cpu').value = text.typeCPU;
+            document.getElementById('type-gpu').value = text.typeGPU;
+            document.getElementById('type-ram').value = text.typeRAM;
+            document.getElementById('hard-drive-memory').value = text.hardDriveMemory;
+        break;
+        case 'ultrabook':
+            document.getElementById('ultrabook-create').style.display = 'block';
+
+            document.getElementById('ultrabook-produser').value = text.provider;
+            document.getElementById('ultrabook-type').value = text.type;
+            document.getElementById('ultrabook-type-cpu').value = text.typeCPU;
+            document.getElementById('ultrabook-type-gpu').value = text.typeGPU;
+            document.getElementById('ultrabook-type-ram').value = text.typeRAM;
+            document.getElementById('ultrabook-hard-drive-memory').value = text.hardDriveMemory;
+            document.getElementById('ultrabook-hyper-threading').value = text.hyperThreading;
+            document.getElementById('ultrabook-num-cores').value = text.numCores;
+            break;
+        case 'computerServer':
+            document.getElementById('server-create').style.display = 'block';
+
+            document.getElementById('server-produser').value = text.provider;
+            document.getElementById('server-type').value = text.type;
+            document.getElementById('server-type-cpu').value = text.typeCPU;
+            document.getElementById('server-type-gpu').value = text.typeGPU;
+            document.getElementById('server-type-ram').value = text.typeRAM;
+            document.getElementById('server-hard-drive-memory').value = text.hardDriveMemory;
+            document.getElementById('server-hyper-threading').value = text.hyperThreading;
+            document.getElementById('server-num-cores').value = text.numCores;
+            document.getElementById('server-model-gpu').value = text.modelGPU;
+            document.getElementById('server-amount-ram').value = text.amountOfRAM;
+            break;
+        default:
+            throw new Error('Form type is not recognized');
+            break;
+    };
+};
 
 function addFullInfoItem (text) {
     console.log(text);
@@ -135,6 +184,7 @@ function addFullInfoItem (text) {
         break;
         case 'computerServer':
             document.getElementById('info-server').style.display = 'block'; 
+
             document.getElementById('info-server-provider').textContent = text.provider;
             document.getElementById('info-server-type').textContent = text.type;
             document.getElementById('info-server-cpu').textContent = text.typeCPU;
@@ -192,10 +242,10 @@ function createItem (e) {
             break;
     }
 
-    dbServase.saveItemInDb(JSON.stringify(item));
+    location.href.slice(-11) ==='create.html'? dbServase.saveItemInDb(JSON.stringify(item)) : dbServase.updateItem(JSON.stringify(item));
 
     window.location.href = 'index.html';
-}
+};
 
 function showForm (e) {
     var formComputer = document.getElementById('computer-create');
@@ -221,20 +271,16 @@ function showForm (e) {
 
 };
 
-
-    
 window.onload = function () {
     if (location.href.slice(-11) === 'create.html') {
         document.getElementById('btn-computer').addEventListener('click',showForm);
         document.getElementById('btn-ultrabook').addEventListener('click',showForm);
         document.getElementById('btn-server').addEventListener('click',showForm);
 
-            document.getElementById('btn-create-computer-item').addEventListener('click',function (e) {
+        document.getElementById('btn-create-computer-item').addEventListener('click',function (e) {
             e.preventDefault();
             createItem(e);  
         });
-        
-       
         document.getElementById('btn-create-ultrabook-item').addEventListener('click',function (e) {
           e.preventDefault();
           createItem(e);  
@@ -244,14 +290,15 @@ window.onload = function () {
           createItem(e);  
         });
     } else if (location.href.slice(-10) === 'index.html') {
-        dbServase.getItmesFromDb(renderItems,deleteItem,getInfoItem);
+        dbServase.getItmesFromDb(renderItems,deleteItem,getInfoItem,editInfoItem);
         function deleteItem (){ 
             var items = document.querySelectorAll('.btn-delete');
             for (var i = 0; i < items.length; i++) {
                 items[i].addEventListener('click',dbServase.deleteItem.bind(dbServase));
             };
         };
-         function getInfoItem (){ 
+
+        function getInfoItem (){ 
             var items = document.querySelectorAll('.btn-info');
             for (var i = 0; i < items.length; i++) {
                 items[i].addEventListener('click', function (e) {
@@ -259,10 +306,35 @@ window.onload = function () {
                });
             };
         };
+        function editInfoItem (){ 
+            var items = document.querySelectorAll('.btn-edit');
+            for (var i = 0; i < items.length; i++) {
+                items[i].addEventListener('click', function (e) {
+                getId(e); 
+               });
+            };
+        };
     } else if (location.href.slice(-9) === 'info.html') {
-        dbServase.getItem(addFullInfoItem);
+        dbServase.getItem(addFullInfoItem,editItem);
         document.getElementById('at-main').addEventListener('click',function () {
             localStorage.clear();
         })
+    } else if (location.href.slice(-9) === 'edit.html') {
+          document.getElementById('btn-create-computer-item').addEventListener('click',function (e) {
+            e.preventDefault();
+            createItem(e);  
+        });
+        document.getElementById('btn-create-ultrabook-item').addEventListener('click',function (e) {
+          e.preventDefault();
+          createItem(e);  
+        });
+        document.getElementById('btn-create-server-item').addEventListener('click',function (e) {
+          e.preventDefault();
+          createItem(e);  
+        });
+        dbServase.getItem(addFullInfoItem,editItem);
+        document.getElementById('at-main').addEventListener('click',function () {
+            localStorage.clear();
+        });
     };
  }; 
