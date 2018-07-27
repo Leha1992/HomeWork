@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Create Item</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <a href="index.html">На главную</a>
+   <h3>Выберите модель для создания</h3>
+   <button id="btn-computer">Компьютер</button>
+   <button id="btn-ultrabook">Ультрабук</button>
+   <button id="btn-server">Вычислительный сервер</button>
+   <form class="computer-create" id="computer-create">
+         <div>
+           <span>Выберите производителя</span>
+           <select id="produser">
+                <option>ASUS</option>
+                <option>Samsung</option>
+                <option>Apple</option>
+            </select> 
+       </div>
+        <div>
+            <span>Выберите тип</span>
+            <select id="type">
+                <option>Стационарный Компьютер</option>
+                <option>Ноутбук</option>
+            </select> 
+        </div>
+        <div>
+            <span>Выберите процессор</span>
+            <select id="type-cpu">
+                <option>Intel</option>
+                <option>AMD</option>
+            </select> 
+        </div>
+        <div>
+            <span>Выберите видеокарту</span>
+            <select id="type-gpu">
+                <option>NVIDIA</option>
+                <option>Radeon</option>
+            </select> 
+        </div>
+        <div>
+            <span>Выберите оперативную память</span>
+            <select id="type-ram">
+                <option>Samsung</option>
+                <option>Crucial</option>
+                <option>Kingston</option>
+            </select> 
+        </div>
+        <div>
+            <span>Выберите обеъм жесткого диска</span>
+            <select id="hard-drive-memory">
+                <option>500</option>
+                <option>1000</option>
+                <option>1500</option>
+                <option>2000</option>
+            </select> 
+        </div>
+        <button id="btn-create-computer-item">Сохранить</button>
+   </form>
+
+   <form class="ultrabook-create" id="ultrabook-create">
+       <div>
+           <span>Выберите производителя</span>
+           <select id="ultrabook-produser">
+                <option>ASUS</option>
+                <option>Samsung</option>
+                <option>Apple</option>
+            </select> 
+       </div>
+        <div>
+            <span>Выберите типь</span>
+            <select id="ultrabook-type">
+                <option>Стационарный Компьютер</option>
+                <option>Ноутбук</option>
+            </select> 
+        </div>
+        <div>
+            <span>Выберите процессор</span>
+            <select id="ultrabook-type-cpu">
+                <option>Intel</option>
+                <option>AMD</option>
+            </select> 
+        </div>
+        <div>
+            <span>Выберите видеокарту</span>
+            <select id="ultrabook-type-gpu">
+                <option>NVIDIA</option>
+                <option>Radeon</option>
+            </select> 
+        </div>
+        <div>
+            <span>Выберите оперативную память</span>
+            <select id="ultrabook-type-ram">
+                <option">Samsung</option>
+                <option">Crucial</option>
+                <option>Kingston</option>
+            </select> 
+        </div>
+        <div>
+            <span>Выберите обеъм жесткого диска</span>
+            <select id="ultrabook-hard-drive-memory">
+                <option>500</option>
+                <option>1000</option>
+                <option>1500</option>
+                <option>2000</option>
+            </select> 
+        </div>
+        <div>
+            <span>Hyper-Threading</span>
+            <input type="checkbox" id="ultrabook-hyper-threading">
+        </div>
+        <div>
+            <span>Выберите количество ядер</span>
+            <select id="ultrabook-num-cores">
+                <option>2</option>
+                <option>4</option>
+                <option>6</option>
+                <option>8</option>
+            </select> 
+        </div>
+        <button id="btn-create-ultrabook-item">Сохранить</button>
+   </form>
+
+   <form class="server-create" id="server-create">
+       <div>
+           <span>Выберите производителя</span>
+           <select id="server-produser">
+                <option>ASUS</option>
+                <option>Samsung</option>
+                <option>Apple</option>
+            </select> 
+       </div>
+        <div>
+            <span>Выберите типь</span>
+            <select id="server-type">
+                <option>Стационарный Компьютер</option>
+                <option>Ноутбук</option>
+            </select> 
+        </div>
+        <div>
+            <span>Выберите процессор</span>
+            <select id="server-type-cpu">
+                <option>Intel</option>
+                <option>AMD</option>
+            </select> 
+        </div>
+        <div>
+            <span>Выберите видеокарту</span>
+            <select id="server-type-gpu">
+                <option>NVIDIA</option>
+                <option>Radeon</option>
+            </select> 
+        </div>
+        <div>
+            <span>Выберите оперативную память</span>
+            <select id="server-type-ram">
+                <option>Samsung</option>
+                <option>Crucial</option>
+                <option>Kingston</option>
+            </select> 
+        </div>
+        <div>
+            <span>Выберите обеъм жесткого диска</span>
+            <select id="server-hard-drive-memory">
+                <option>500</option>
+                <option>1000</option>
+                <option>1500</option>
+                <option>2000</option>
+            </select> 
+        </div>
+        <div>
+            <span>Hyper-Threading</span>
+            <input type="checkbox" id="server-hyper-threading">
+        </div>
+        <div>
+            <span>Выберите количество ядер</span>
+            <select id="server-num-cores">
+                <option>2</option>
+                <option>4</option>
+                <option>6</option>
+                <option>8</option>
+            </select> 
+        </div>
+        <div>
+            <span>Выберите модель видеокарты</span>
+            <select id="server-model-gpu">
+                <option>ASUS GeForce GTX 1060</option>
+                <option>MSI Geforce GTX 1050 Ti</option>
+                <option>Gigabyte GeForce GTX 1080</option>
+                <option>igabyte GeForce GTX 1050 </option>
+            </select> 
+        </div>
+        <div>
+            <span>Выберите oбъем ОЗУ</span>
+            <select id="server-amount-ram">
+                <option>2</option>
+                <option>4</option>
+                <option>6</option>
+                <option>8</option>
+            </select> 
+        </div>
+        <button id="btn-create-server-item">Сохранить</button>
+   </form>
+   <script src="js/scripts.js"></script>
+</body>
+</html>
